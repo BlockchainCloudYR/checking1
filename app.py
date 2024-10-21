@@ -17,13 +17,12 @@ from solana.rpc.api import Client
 import psycopg2
 from bit import PrivateKeyTestnet
 from dotenv import load_dotenv
-from flask_socketio import SocketIO
+
 
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = 'yeah buddy'
-socketio = SocketIO(app)
 
 # Your Infura Project ID
 INFURA_PROJECT_ID = '38898b105ab04267a0acd987a4d82d9a'
@@ -581,4 +580,7 @@ def start_background_loop(loop):
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5000, allow_unsafe_werkzeug=True)
+    loop = asyncio.new_event_loop()
+    t = threading.Thread(target=start_background_loop, args=(loop,))
+    t.start()
+    app.run(host='0.0.0.0', port=5000,debug=True)
