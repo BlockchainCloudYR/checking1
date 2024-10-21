@@ -581,7 +581,4 @@ def start_background_loop(loop):
 
 
 if __name__ == '__main__':
-    loop = asyncio.new_event_loop()
-    t = threading.Thread(target=start_background_loop, args=(loop,))
-    t.start()
     socketio.run(app, host='0.0.0.0', port=5000, allow_unsafe_werkzeug=True)
