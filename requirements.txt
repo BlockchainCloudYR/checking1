@@ -1,11 +1,11 @@
 Flask
+Flask-SocketIO
+eventlet
+python-dotenv
 requests
-asyncio
-websockets
 web3
 flask_sqlalchemy
 solders
 solana
 psycopg2-binary
 bit
-python-dotenv
