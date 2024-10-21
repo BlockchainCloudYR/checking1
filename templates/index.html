@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Wallet</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/yr-high-resolution-logo-transparent.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Style for the chart container */
+        .chart-container {
+            width: 200px;  /* Desired width */
+            height: 70px; /* Desired height */
+            margin-right: 15px; /* Center the container if needed */
+            position: relative; /* Ensure proper layout */
+        }
+
+        /* Ensure canvas takes up the full size of its container */
+        canvas {
+            display: block; /* Remove extra space below the canvas */
+            width: 100% !important; /* Stretch canvas to fill container width */
+            height: 100% !important; /* Stretch canvas to fill container height */
+            box-sizing: border-box; /* Include padding and border in width/height calculation */
+        }
+    </style>
+    <script>
+    async function fetchPrice() {
+    try {
+        const response = await fetch('/price');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log('Fetched Data:', data); // Debugging line
+
+        // Ensure data is defined before using it
+        if (data) {
+            const bitcoinPrice = parseFloat(data.price_btc);
+            const ethereumPrice = parseFloat(data.price_eth);
+            const solanaPrice = parseFloat(data.price_sol);
+            const bnbPrice = parseFloat(data.price_bnb);
+            const avalanchePrice = parseFloat(data.price_avalanche);
+            const optimismPrice = parseFloat(data.price_optimism);
+            const arbitrumPrice = parseFloat(data.price_arbitrum);
+            const fantomPrice = parseFloat(data.price_fantom);
+            const confluxPrice = parseFloat(data.price_conflux);
+            const kavaPrice = parseFloat(data.price_kava);
+            const moonbeamPrice = parseFloat(data.price_moonbeam);
+
+            const bitcoinChangePercent = parseFloat(data['24hr_change_btc']);
+            const ethereumChangePercent = parseFloat(data['24hr_change_eth']);
+            const solanaChangePercent = parseFloat(data['24hr_change_sol']);
+            const bnbChangePercent = parseFloat(data['24hr_change_bnb']);
+            const avalancheChangePercent = parseFloat(data['24hr_change_avalanche']);
+            const optimismChangePercent = parseFloat(data['24hr_change_optimism']);
+            const arbitrumChangePercent = parseFloat(data['24hr_change_arbitrum']);
+            const fantomChangePercent = parseFloat(data['24hr_change_fantom']);
+            const confluxChangePercent = parseFloat(data['24hr_change_conflux']);
+            const kavaChangePercent = parseFloat(data['24hr_change_kava']);
+            const moonbeamChangePercent = parseFloat(data['24hr_change_moonbeam']);
+
+            // Format the percentage change
+            function formatPercentageChange(change) {
+                if (change >= 0) {
+                    return `+${change.toFixed(2)}%`;
+                } else {
+                    return `${change.toFixed(2)}%`;
+                }
+            }
+
+            // Update Bitcoin price
+            document.getElementById('bitcoin-price').innerText = bitcoinPrice ? `$${bitcoinPrice.toFixed(2)}` : 'N/A';
+            document.getElementById('bitcoin-24hr-change').innerText = bitcoinChangePercent ? formatPercentageChange(bitcoinChangePercent) : 'N/A';
+
+            // Update Ethereum price
+            document.getElementById('ethereum-price').innerText = ethereumPrice ? `$${ethereumPrice.toFixed(2)}` : 'N/A';
+            document.getElementById('ethereum-24hr-change').innerText = ethereumChangePercent ? formatPercentageChange(ethereumChangePercent) : 'N/A';
+
+            // Update Solana price
+            document.getElementById('solana-price').innerText = solanaPrice ? `$${solanaPrice.toFixed(2)}` : 'N/A';
+            document.getElementById('solana-24hr-change').innerText = solanaChangePercent ? formatPercentageChange(solanaChangePercent) : 'N/A';
+
+            // Update BNB price
+            document.getElementById('bnb-price').innerText = bnbPrice ? `$${bnbPrice.toFixed(2)}` : 'N/A';
+            document.getElementById('bnb-24hr-change').innerText = bnbChangePercent ? formatPercentageChange(bnbChangePercent) : 'N/A';
+
+            // Update avalanche price
+            document.getElementById('avalanche-price').innerText = avalanchePrice ? `$${avalanchePrice.toFixed(2)}` : 'N/A';
+            document.getElementById('avalanche-24hr-change').innerText = avalancheChangePercent ? formatPercentageChange(avalancheChangePercent) : 'N/A';
+
+            // Update optimism price
+            document.getElementById('optimism-price').innerText = optimismPrice ? `$${optimismPrice.toFixed(2)}` : 'N/A';
+            document.getElementById('optimism-24hr-change').innerText = optimismChangePercent ? formatPercentageChange(optimismChangePercent) : 'N/A';
+
+            // Update arbitrum price
+            document.getElementById('arbitrum-price').innerText = arbitrumPrice ? `$${arbitrumPrice.toFixed(2)}` : 'N/A';
+            document.getElementById('arbitrum-24hr-change').innerText = arbitrumChangePercent ? formatPercentageChange(arbitrumChangePercent) : 'N/A';
+
+            // Update fantom price
+            document.getElementById('fantom-price').innerText = fantomPrice ? `$${fantomPrice.toFixed(2)}` : 'N/A';
+            document.getElementById('fantom-24hr-change').innerText = fantomChangePercent ? formatPercentageChange(fantomChangePercent) : 'N/A';
+
+            // Update conflux price
+            document.getElementById('conflux-price').innerText = confluxPrice ? `$${confluxPrice.toFixed(2)}` : 'N/A';
+            document.getElementById('conflux-24hr-change').innerText = confluxChangePercent ? formatPercentageChange(confluxChangePercent) : 'N/A';
+
+            // Update kava price
+            document.getElementById('kava-price').innerText = kavaPrice ? `$${kavaPrice.toFixed(2)}` : 'N/A';
+            document.getElementById('kava-24hr-change').innerText = kavaChangePercent ? formatPercentageChange(kavaChangePercent) : 'N/A';
+
+            // Update moonbeam price
+            document.getElementById('moonbeam-price').innerText = moonbeamPrice ? `$${moonbeamPrice.toFixed(2)}` : 'N/A';
+            document.getElementById('moonbeam-24hr-change').innerText = moonbeamChangePercent ? formatPercentageChange(moonbeamChangePercent) : 'N/A';
+
+
+            // Update color based on the percentage change
+            document.getElementById('bitcoin-24hr-change').classList.toggle('negative', bitcoinChangePercent < 0);
+            document.getElementById('bitcoin-24hr-change').classList.toggle('positive', bitcoinChangePercent >= 0);
+
+            document.getElementById('ethereum-24hr-change').classList.toggle('negative', ethereumChangePercent < 0);
+            document.getElementById('ethereum-24hr-change').classList.toggle('positive', ethereumChangePercent >= 0);
+
+            document.getElementById('solana-24hr-change').classList.toggle('negative', solanaChangePercent < 0);
+            document.getElementById('solana-24hr-change').classList.toggle('positive', solanaChangePercent >= 0);
+
+            document.getElementById('bnb-24hr-change').classList.toggle('negative', bnbChangePercent < 0);
+            document.getElementById('bnb-24hr-change').classList.toggle('positive', bnbChangePercent >= 0);
+
+            document.getElementById('avalanche-24hr-change').classList.toggle('negative', avalancheChangePercent < 0);
+            document.getElementById('avalanche-24hr-change').classList.toggle('positive', avalancheChangePercent >= 0);
+
+            document.getElementById('optimism-24hr-change').classList.toggle('negative', optimismChangePercent < 0);
+            document.getElementById('optimism-24hr-change').classList.toggle('positive', optimismChangePercent >= 0);
+
+            document.getElementById('arbitrum-24hr-change').classList.toggle('negative', arbitrumChangePercent < 0);
+            document.getElementById('arbitrum-24hr-change').classList.toggle('positive', arbitrumChangePercent >= 0);
+
+            document.getElementById('fantom-24hr-change').classList.toggle('negative', fantomChangePercent < 0);
+            document.getElementById('fantom-24hr-change').classList.toggle('positive', fantomChangePercent >= 0);
+
+            document.getElementById('conflux-24hr-change').classList.toggle('negative', confluxChangePercent < 0);
+            document.getElementById('conflux-24hr-change').classList.toggle('positive', confluxChangePercent >= 0);
+
+            document.getElementById('kava-24hr-change').classList.toggle('negative', kavaChangePercent < 0);
+            document.getElementById('kava-24hr-change').classList.toggle('positive', kavaChangePercent >= 0);
+
+            document.getElementById('moonbeam-24hr-change').classList.toggle('negative', moonbeamChangePercent < 0);
+            document.getElementById('moonbeam-24hr-change').classList.toggle('positive', moonbeamChangePercent >= 0);
+        }
+    } catch (error) {
+        console.error('Fetch error:', error);
+        document.getElementById('bitcoin-price').innerText = 'Error fetching price';
+        document.getElementById('bitcoin-24hr-change').innerText = 'Error fetching change';
+        document.getElementById('ethereum-price').innerText = 'Error fetching price';
+        document.getElementById('ethereum-24hr-change').innerText = 'Error fetching change';
+        document.getElementById('solana-price').innerText = 'Error fetching price';
+        document.getElementById('solana-24hr-change').innerText = 'Error fetching change';
+        document.getElementById('bnb-price').innerText = 'Error fetching price';
+        document.getElementById('bnb-24hr-change').innerText = 'Error fetching change';
+        document.getElementById('avalanche-price').innerText = 'Error fetching price';
+        document.getElementById('avalanche-24hr-change').innerText = 'Error fetching change';
+        document.getElementById('optimism-price').innerText = 'Error fetching price';
+        document.getElementById('optimism-24hr-change').innerText = 'Error fetching change';
+        document.getElementById('arbitrum-price').innerText = 'Error fetching price';
+        document.getElementById('arbitrum-24hr-change').innerText = 'Error fetching change';
+        document.getElementById('fantom-price').innerText = 'Error fetching price';
+        document.getElementById('fantom-24hr-change').innerText = 'Error fetching change';
+        document.getElementById('conflux-price').innerText = 'Error fetching price';
+        document.getElementById('conflux-24hr-change').innerText = 'Error fetching change';
+        document.getElementById('kava-price').innerText = 'Error fetching price';
+        document.getElementById('kava-24hr-change').innerText = 'Error fetching change';
+        document.getElementById('moonbeam-price').innerText = 'Error fetching price';
+        document.getElementById('moonbeam-24hr-change').innerText = 'Error fetching change';
+
+    }
+}
+
+
+window.onload = () => {
+    fetchPrice(); // Fetch price on page load
+    setInterval(fetchPrice, 1000); // Fetch price every 1 seconds
+};
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <!-- Logo at the top -->
+            <div class="logo" onclick="window.location.href='/'">
+                <img src="{{ url_for('static', filename='images/yr-high-resolution-logo-transparent.png') }}" alt="Logo">
+                <div class="logo-name">
+                    <h2>YashRaj</h2>
+                </div>
+            </div>
+            <!-- Sections -->
+            <div class="sections">
+                <div class="menu-item highlight-account" id="account" onclick="window.location.href='/account'" >
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/account.png') }}" alt="Account Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Account</h2>
+                    </div>
+                </div>
+                <div class="menu-item highlight-wallet" id="wallet" onclick="window.location.href='/'">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/wallet.png') }}" alt="Wallet Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Wallet</h2>
+                    </div>
+                </div>
+                <div class="sections">
+                <div class="menu-item highlight-send" id="send" onclick="window.location.href='/send'">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/send.png') }}" alt="Send Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Send</h2>
+                    </div>
+                </div>
+                <div class="menu-item highlight-receive" id="receive" onclick="window.location.href='/receive'">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/receive.png') }}" alt="Receive Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Receive</h2>
+                    </div>
+                </div>
+                <div class="menu-item highlight-buy-crypto" id="buy-crypto">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/buy.png') }}" alt="Buy Crypto Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Buy Crypto</h2>
+                    </div>
+                </div>
+                <div class="menu-item highlight-sell-crypto" id="sell-crypto">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/sell.png') }}" alt="Sell Crypto Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Sell Crypto</h2>
+                    </div>
+                </div>
+                <div class="menu-item highlight-history" id="history">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/history.png') }}" alt="History Icon">
+                    </div>
+                    <div class="text">
+                        <h2>History</h2>
+                    </div>
+                </div>
+                <div class="menu-item highlight-exit" id="exit">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/exit.png') }}" alt="Exit Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Exit</h2>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <!-- Main content goes here -->
+            <div class="wallet-section">
+                <!-- Header for Wallet Information -->
+                <div class="wallet-header">
+                    <div class="wallet-column">Coins</div>
+                    <div class="wallet-column">Price</div>
+                    <div class="wallet-column">24hr Change</div>
+                    <div class="wallet-column">7 days chart</div>
+                </div>
+
+                <!-- List of Coins -->
+                <div class="wallet-list">
+                    <!-- Bitcoin Row -->
+                    <div class="coin-entry bitcoin-row">
+                        <div class="wallet-column bitcoin-name">
+                            <img src="{{ url_for('static', filename='images/bitcoin.png') }}" alt="Bitcoin Icon" class="bitcoin-icon">
+                            Bitcoin
+                        </div>
+                        <div class="wallet-column bitcoin-price" id="bitcoin-price">Loading...</div>
+                        <div class="wallet-column bitcoin-24hrs" id="bitcoin-24hr-change">Loading...</div>
+                        <!-- BTC Real-Time Chart -->
+                        <div class="chart-container" id="btc-container">
+                            <canvas id="btcChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Ethereum Row -->
+                    <div class="coin-entry ethereum-row">
+                        <div class="wallet-column ethereum-name">
+                            <img src="{{ url_for('static', filename='images/ethereum.png') }}" alt="Ethereum Icon" class="ethereum-icon">
+                            Ethereum
+                        </div>
+                        <div class="wallet-column ethereum-price" id="ethereum-price">Loading...</div>
+                        <div class="wallet-column ethereum-24hrs" id="ethereum-24hr-change">Loading...</div>
+                        <div class="chart-container" id="eth-container">
+                            <canvas id="ethChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Solana Row -->
+                    <div class="coin-entry solana-row">
+                        <div class="wallet-column solana-name">
+                            <img src="{{ url_for('static', filename='images/solana.png') }}" alt="Solana Icon" class="solana-icon">
+                            Solana
+                        </div>
+                        <div class="wallet-column solana-price" id="solana-price">Loading...</div>
+                        <div class="wallet-column solana-24hrs" id="solana-24hr-change">Loading...</div>
+                        <div class="chart-container" id="sol-container">
+                            <canvas id="solChart"></canvas>
+                        </div>
+                    </div>
+
+
+                    <!-- BNB Row -->
+                    <div class="coin-entry bnb-row">
+                        <div class="wallet-column bnb-name">
+                            <img src="{{ url_for('static', filename='images/bnb.png') }}" alt="BNB Icon" class="bnb-icon">
+                            BNB
+                        </div>
+                        <div class="wallet-column bnb-price" id="bnb-price">Loading...</div>
+                        <div class="wallet-column bnb-24hrs" id="bnb-24hr-change">Loading...</div>
+                        <div class="chart-container" id="bnb-container">
+                            <canvas id="bnbChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- avalanche Row -->
+                    <div class="coin-entry avalanche-row">
+                        <div class="wallet-column avalanche-name">
+                            <img src="{{ url_for('static', filename='images/avalanche.png') }}" alt="avalanche Icon" class="avalanche-icon">
+                            Avalanche
+                        </div>
+                        <div class="wallet-column avalanche-price" id="avalanche-price">Loading...</div>
+                        <div class="wallet-column avalanche-24hrs" id="avalanche-24hr-change">Loading...</div>
+                        <div class="chart-container" id="avax-container">
+                            <canvas id="avaxChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- optimism Row -->
+                    <div class="coin-entry optimism-row">
+                        <div class="wallet-column optimism-name">
+                            <img src="{{ url_for('static', filename='images/optimism.png') }}" alt="optimism Icon" class="optimism-icon">
+                            Optimism
+                        </div>
+                        <div class="wallet-column optimism-price" id="optimism-price">Loading...</div>
+                        <div class="wallet-column optimism-24hrs" id="optimism-24hr-change">Loading...</div>
+                        <div class="chart-container" id="op-container">
+                            <canvas id="opChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- arbitrum Row -->
+                    <div class="coin-entry arbitrum-row">
+                        <div class="wallet-column arbitrum-name">
+                            <img src="{{ url_for('static', filename='images/arbitrum.png') }}" alt="arbitrum Icon" class="arbitrum-icon">
+                            Arbitrum
+                        </div>
+                        <div class="wallet-column arbitrum-price" id="arbitrum-price">Loading...</div>
+                        <div class="wallet-column arbitrum-24hrs" id="arbitrum-24hr-change">Loading...</div>
+                        <div class="chart-container" id="arbi-container">
+                            <canvas id="arbiChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- fantom Row -->
+                    <div class="coin-entry fantom-row">
+                        <div class="wallet-column fantom-name">
+                            <img src="{{ url_for('static', filename='images/fantom.png') }}" alt="fantom Icon" class="fantom-icon">
+                            Fantom
+                        </div>
+                        <div class="wallet-column fantom-price" id="fantom-price">Loading...</div>
+                        <div class="wallet-column fantom-24hrs" id="fantom-24hr-change">Loading...</div>
+                        <div class="chart-container" id="fantom-container">
+                            <canvas id="fantomChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- conflux Row -->
+                    <div class="coin-entry conflux-row">
+                        <div class="wallet-column conflux-name">
+                            <img src="{{ url_for('static', filename='images/conflux.png') }}" alt="conflux Icon" class="conflux-icon">
+                            Conflux
+                        </div>
+                        <div class="wallet-column conflux-price" id="conflux-price">Loading...</div>
+                        <div class="wallet-column conflux-24hrs" id="conflux-24hr-change">Loading...</div>
+                        <div class="chart-container" id="conflux-container">
+                            <canvas id="confluxChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- kava Row -->
+                    <div class="coin-entry kava-row">
+                        <div class="wallet-column kava-name">
+                            <img src="{{ url_for('static', filename='images/kava.png') }}" alt="kava Icon" class="kava-icon">
+                            Kava
+                        </div>
+                        <div class="wallet-column kava-price" id="kava-price">Loading...</div>
+                        <div class="wallet-column kava-24hrs" id="kava-24hr-change">Loading...</div>
+                        <div class="chart-container" id="kava-container">
+                            <canvas id="kavaChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- moonbeam Row -->
+                    <div class="coin-entry moonbeam-row">
+                        <div class="wallet-column moonbeam-name">
+                            <img src="{{ url_for('static', filename='images/moonbeam.png') }}" alt="moonbeam Icon" class="moonbeam-icon">
+                            Moonbeam
+                        </div>
+                        <div class="wallet-column moonbeam-price" id="moonbeam-price">Loading...</div>
+                        <div class="wallet-column moonbeam-24hrs" id="moonbeam-24hr-change">Loading...</div>
+                        <div class="chart-container" id="moonbeam-container">
+                            <canvas id="moonbeamChart"></canvas>
+                        </div>
+                    </div>
+
+                    <script>
+                        const coins = [
+                            {id: 'btcChart', apiUrl: '/api/bitcoin-prices', color: '#FFD700', label: 'BTC'},
+                            {id: 'ethChart', apiUrl: '/api/ethereum-prices', color: '#00BFFF', label: 'ETH'},
+                            {id: 'solChart', apiUrl: '/api/solana-prices', color: '#32CD32', label: 'SOL'},
+                            {id: 'bnbChart', apiUrl: '/api/bnb-prices', color: '#FFD700', label: 'BNB'},
+                            {id: 'avaxChart', apiUrl: '/api/avax-prices', color: '#FF4500', label: 'AVAX'},
+                            {id: 'opChart', apiUrl: '/api/optimism-prices', color: '#FF4500', label: 'OP'},
+                            {id: 'arbiChart', apiUrl: '/api/arbitrum-prices', color: '#6495ED', label: 'ARBI'},
+                            {id: 'fantomChart', apiUrl: '/api/fantom-prices', color: '#4169E1', label: 'FANTOM'},
+                            {id: 'confluxChart', apiUrl: '/api/conflux-prices', color: '#00FF7F', label: 'CONFLUX'},
+                            {id: 'kavaChart', apiUrl: '/api/kava-prices', color: '#FF6347', label: 'KAVA'},
+                            {id: 'moonbeamChart', apiUrl: '/api/moonbeam-prices', color: '#8A2BE2', label: 'MOONBEAM'},
+                        ];
+                
+                        const createChart = (ctx, data, color, label) => {
+                            const labels = data.map(entry => {
+                                const date = new Date(entry.date);
+                                return `${date.getDate()}/${date.getMonth() + 1} ${date.getHours()}:${date.getMinutes()}`;
+                            });
+                            const prices = data.map(entry => entry.price);
+                
+                            return new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: `${label} Price (USD)`,
+                                        data: prices,
+                                        borderColor: color,
+                                        borderWidth: 2,
+                                        fill: false,
+                                        tension: 0.1
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        x: {
+                                            display: false
+                                        },
+                                        y: {
+                                            display: false
+                                        }
+                                    },
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        }
+                                    },
+                                    elements: {
+                                        point: {
+                                            radius: 0
+                                        }
+                                    }
+                                }
+                            });
+                        };
+                
+                        const saveDataToLocalStorage = (key, data) => {
+                            localStorage.setItem(key, JSON.stringify(data));
+                        };
+                
+                        const loadDataFromLocalStorage = (key) => {
+                            const data = localStorage.getItem(key);
+                            return data ? JSON.parse(data) : null;
+                        };
+                
+                        // Fetch price data and create charts for each coin
+                        coins.forEach(coin => {
+                            const container = document.getElementById(coin.id).parentElement;
+                
+                            // Try loading from local storage first
+                            const cachedData = loadDataFromLocalStorage(coin.id);
+                            if (cachedData) {
+                                container.classList.add('loaded'); // Hide loading indicator
+                                const ctx = document.getElementById(coin.id).getContext('2d');
+                                createChart(ctx, cachedData, coin.color, coin.label);
+                            } else {
+                                // Fetch new data if no cache available
+                                fetch(coin.apiUrl)
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Network response was not ok');
+                                        }
+                                        return response.json();
+                                    })
+                                    .then(data => {
+                                        container.classList.add('loaded'); // Hide loading indicator
+                                        if (Array.isArray(data) && data.length > 0) {
+                                            saveDataToLocalStorage(coin.id, data); // Save data to local storage
+                                            const ctx = document.getElementById(coin.id).getContext('2d');
+                                            createChart(ctx, data, coin.color, coin.label);
+                                        } else {
+                                            container.querySelector('.loading').textContent = 'No data available';
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error(`Error fetching ${coin.label} data:`, error);
+                                        container.querySelector('.loading').textContent = 'Error loading data';
+                                    });
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+
+</html>

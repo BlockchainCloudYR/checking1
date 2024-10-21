@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Wallet</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/yr-high-resolution-logo-transparent.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/send.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <!-- Logo at the top -->
+            <div class="logo" onclick="window.location.href='/'">
+                <img src="{{ url_for('static', filename='images/yr-high-resolution-logo-transparent.png') }}" alt="Logo">
+                <div class="logo-name">
+                    <h2>YashRaj</h2>
+                </div>
+            </div>
+            <!-- Sections -->
+            <div class="sections">
+                <div class="menu-item highlight-account" id="account" onclick="window.location.href='/account'" >
+                    <div class="rectangle-indicator"></div> <!-- Rectangle indicator -->
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/account.png') }}" alt="Account Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Account</h2>
+                    </div>
+                </div>
+                <div class="menu-item highlight-wallet" id="wallet" onclick="window.location.href='/'">
+                    <div class="rectangle-indicator"></div> <!-- Rectangle indicator -->
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/wallet.png') }}" alt="Wallet Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Wallet</h2>
+                    </div>
+                </div>
+                <div class="menu-item highlight-send" id="send" onclick="window.location.href='/send'">
+                    <div class="rectangle-indicator"></div> <!-- Rectangle indicator -->
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/send.png') }}" alt="Send Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Send</h2>
+                    </div>
+                </div>
+                <div class="menu-item highlight-receive" id="receive" onclick="window.location.href='/receive'">
+                    <div class="rectangle-indicator"></div> <!-- Rectangle indicator -->
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/receive.png') }}" alt="Receive Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Receive</h2>
+                    </div>
+                </div>
+                <div class="menu-item highlight-buy-crypto" id="buy-crypto">
+                    <div class="rectangle-indicator"></div> <!-- Rectangle indicator -->
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/buy.png') }}" alt="Buy Crypto Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Buy Crypto</h2>
+                    </div>
+                </div>
+                <div class="menu-item highlight-sell-crypto" id="sell-crypto">
+                    <div class="rectangle-indicator"></div> <!-- Rectangle indicator -->
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/sell.png') }}" alt="Sell Crypto Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Sell Crypto</h2>
+                    </div>
+                </div>
+                <div class="menu-item highlight-history" id="history">
+                    <div class="rectangle-indicator"></div> <!-- Rectangle indicator -->
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/history.png') }}" alt="History Icon">
+                    </div>
+                    <div class="text">
+                        <h2>History</h2>
+                    </div>
+                </div>
+                <div class="menu-item highlight-exit" id="exit">
+                    <div class="rectangle-indicator"></div> <!-- Rectangle indicator -->
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/exit.png') }}" alt="Exit Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Exit</h2>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Middle content area -->
+        <!-- Middle content area -->
+        <div class="main-content" id="main-content">
+            <h1>Welcome to Your Send Section!!</h1>
+            <p>Select a cryptocurrency from the right to view more details.</p>
+        </div>
+
+        <!-- Right sidebar for coin listing and search -->
+        <aside class="right-sidebar">
+            <div class="search-container">
+                <img src="{{ url_for('static', filename='images/search-interface-symbol.png') }}" alt="Search Icon" class="search-icon">
+                <input type="text" id="coin-search" placeholder="Search..." oninput="filterCoins()">
+            </div>
+
+            <div id="coin-list" class="coin-list">
+                <div class="coin-item" data-coin-type="bitcoin">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/bitcoin.png') }}" alt="Bitcoin Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Bitcoin (BTC)</h2>
+                    </div>
+                </div>
+
+                <div class="coin-item" data-coin-type="ethereum">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/ethereum.png') }}" alt="Ethereum Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Ethereum (ETH)</h2>
+                    </div>
+                </div>
+
+                <div class="coin-item" data-coin-type="solana">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/solana.png') }}" alt="Solana Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Solana (SOL)</h2>
+                    </div>
+                </div>
+
+                <div class="coin-item" data-coin-type="binance">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/bnb.png') }}" alt="Binance Coin Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Binance Coin (BNB)</h2>
+                    </div>
+                </div>
+
+                <div class="coin-item" data-coin-type="avalanche">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/avalanche.png') }}" alt="Avalanche Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Avalanche (AVAX)</h2>
+                    </div>
+                </div>
+
+                <div class="coin-item" data-coin-type="optimism">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/optimism.png') }}" alt="optimism Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Optimism (OPM)</h2>
+                    </div>
+                </div>
+
+                <div class="coin-item" data-coin-type="arbitrum">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/arbitrum.png') }}" alt="arbitrum Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Arbitrum (ARB)</h2>
+                    </div>
+                </div>
+
+                <div class="coin-item" data-coin-type="fantom">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/fantom.png') }}" alt="fantom Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Fantom (FTM)</h2>
+                    </div>
+                </div>
+
+                <div class="coin-item" data-coin-type="conflux">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/conflux.png') }}" alt="conflux Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Conflux (CFX)</h2>
+                    </div>
+                </div>
+
+                <div class="coin-item" data-coin-type="kava">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/kava.png') }}" alt="kava Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Kava (KAVA)</h2>
+                    </div>
+                </div>
+
+                <div class="coin-item" data-coin-type="moonbeam">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/moonbeam.png') }}" alt="moonbeam Icon">
+                    </div>
+                    <div class="text">
+                        <h2>Moonbeam (GLMR)</h2>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+
+
+
+
+
+<script>
+    function filterCoins() {
+        const query = document.getElementById('coin-search').value.toLowerCase();
+        const coinItems = document.querySelectorAll('#coin-list .coin-item');
+        coinItems.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            item.style.display = text.includes(query) ? 'block' : 'none';
+        });
+    }
+
+    function handleCoinClick(coinName) {
+        const coinType = coinName.toLowerCase().split(' ')[0];
+        window.location.href = `/send?coin_type=${coinType}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle coin clicks to dynamically load content
+        document.querySelectorAll('.coin-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const coinName = this.querySelector('.text h2').textContent.trim();
+                handleCoinClick(coinName);
+            });
+        });
+
+        // Check if a specific coin_type is in the query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const coinType = urlParams.get('coin_type');
+        console.log(`Detected coin_type: ${coinType}`); // Debugging log
+
+        // Dynamically display content based on the coin clicked
+        const mainContent = document.getElementById('main-content');
+        if (coinType === 'ethereum') {
+            mainContent.innerHTML = `
+                <div class="ethereum-content" style="position: relative;">
+
+                    <form id="sendForm">
+                        <img src="{{ url_for('static', filename='images/ethereum.png') }}" alt="Ethereum Logo" class="ethereum-logo" style="position: absolute; top: -190px; left: 380px;">
+                        <h1 id="ethereum-header" style="display: inline-block; margin-right: 10px; position: absolute; top: -80px; left: 365px;">
+                            Ethereum
+                        </h1>
+                        <div style="position: absolute; top: -10px; left: 220px;">
+                            <input type="text" id="eth-address" name="recipient" placeholder="Send to Ethereum address"
+                            style="border: 2px solid #ccc; padding: 13px; width: 400px; background-color: #222528; color: white; font-size: 15px;" />
+                            <button type="button" id="clear-button" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: white; cursor: pointer; font-size: 1.2em;">✖</button>
+                        </div>
+                        <div style="position: absolute; top: 80px; left: 220px;">
+                            <input type="text" id="eth-amount" name="amount" placeholder="Amount in ETH"
+                                onkeydown="return event.key !== 'ArrowUp' && event.key !== 'ArrowDown';"
+                                oninput="let pos = this.selectionStart; this.value = this.value.replace(/[^0-9.]/g, ''); if (this.value.split('.').length > 2) { this.value = this.value.replace(/(\..*)\..*/, '$1'); } this.setSelectionRange(pos, pos);"
+                                style="border: none; border-bottom: 2px solid white; padding: 5px; width: 420px; background-color: transparent; color: white; font-size: 15px; outline: none; appearance: none; -moz-appearance: textfield;" />
+                            <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: white;">ETH</span>
+                        </div>
+
+                        <div style="position: absolute; top: 160px; left: 320px;">
+                            <button type="submit" id="send-button" style="width: 220px; padding: 13px; background-color: #181c1f; color: white; font-size: 16px; border: none; cursor: pointer; border-radius: 25px;">
+                                Send
+                            </button>
+                        </div>
+                    </form>
+                    <div id="message" style="position: absolute; top: 380px; left: -10px; width: 420px; min-height: 30px; font-size: 12px; color:green"></div>
+
+                </div>
+            `;
+
+            $(document).ready(function() {
+                $('#sendForm').on('submit', function(event) {
+                    event.preventDefault(); // Prevent form submission
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/send_transaction',
+                        data: $(this).serialize(), // Serialize form data
+                        success: function(response) {
+                            $('#message').html('<p>Transaction successful! Hash: ' + response + '</p>');
+                        },
+                        error: function(xhr) {
+                            $('#message').html('<p>Error: ' + xhr.responseJSON.error + '</p>');
+                        }
+                    });
+                });
+            });
+
+            // Add event listener to clear button after innerHTML is set
+            document.getElementById('clear-button').addEventListener('click', function() {
+                document.getElementById('eth-address').value = ''; // Clear the input
+            });
+        } else {
+            mainContent.innerHTML = `
+                <h1>Welcome to Your Send Section!!</h1>
+                <p>Select a cryptocurrency from the right to view more details.</p>
+            `;
+        }
+    });
+</script>
+
+<style>
+    /* Hide number input arrows */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+
+
+
+</body>
+
+</html>

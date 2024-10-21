@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "app.py",  
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "app.py"
+    }
+  ],
+  "env": {
+    "SECRET_KEY": "yeah buddy",
+    "DATABASE_URL": "postgresql://test_owner:KFs7JlxGtmh5@ep-fragrant-rice-a4uz3q1a.us-east-1.aws.neon.tech/test?sslmode=require" 
+  }
+}

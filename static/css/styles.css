@@ -1,0 +1,972 @@
+body, h1, h2, ul, li, section {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container */
+.container {
+    display: flex;
+    width: 100vw; /* Ensure container uses the full viewport width */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 175px;
+    background-color: #25304a;
+    color: #fff;
+    padding: 1rem;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem; /* Space between logo and sections */
+    margin-top: 0; /* Remove top margin */
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo img {
+    width: 100px; /* Adjust logo size as needed */
+    height: auto;
+    margin-bottom: 0.5rem; /* Space between logo and text */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo:hover img {
+    transform: scale(1.1); /* Slightly expand the logo */
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4); /* Add a subtle glow */
+}
+
+.logo-name h2 {
+    font-size: 1.2rem;
+    color: #fff;
+    margin: 0; /* Remove default margin */
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover h2 {
+    transform: scale(1.05); /* Slightly expand the text */
+    color: #f0f0f0; /* Slightly lighter text color on hover */
+}
+
+/* Sections */
+.sections {
+    width: 100%;
+}
+
+.menu-item {
+    display: flex; /* Align icon and text horizontally */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: #25304a;
+    border-radius: 5px;
+    width: 100%; /* Ensure full width */
+    position: relative; /* For positioning the rectangle indicator */
+    overflow: hidden; /* Ensure no overlap */
+    transition: background-color 0.3s, border 0.3s;
+}
+
+.menu-item:hover {
+    background-color: #354159; /* Darker background color on hover */
+    cursor: pointer;
+}
+
+/* Rectangle Indicator Styling */
+.rectangle-indicator {
+    display: none; /* Hidden by default */
+    width: 10px; /* Width of the rectangle */
+    height: 30px; /* Height of the rectangle */
+    background-color: white; /* Color of the rectangle */
+    position: absolute; /* Positioning relative to menu-item */
+    left: -20px; /* Adjust to position rectangle extremely left */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for perfect centering */
+}
+
+/* Show rectangle indicator on hover */
+.menu-item:hover .rectangle-indicator {
+    display: block; /* Show the rectangle on hover */
+}
+
+/* Highlight for Account Icon */
+.menu-item.highlight-account:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Highlight for Wallet Icon */
+.menu-item.highlight-wallet:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Highlight for Send Icon */
+.menu-item.highlight-send:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Highlight for Receive Icon */
+.menu-item.highlight-receive:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Highlight for Buy Crypto Icon */
+.menu-item.highlight-buy-crypto:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Highlight for Sell Crypto Icon */
+.menu-item.highlight-sell-crypto:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Highlight for History Icon */
+.menu-item.highlight-history:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.menu-item.highlight-exit:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.menu-item .icon {
+    margin-right: 0.5rem; /* Space between icon and text */
+}
+
+.menu-item .icon img {
+    width: 24px; /* Adjust size as needed */
+    height: auto; /* Maintain aspect ratio */
+    transition: border 0.1s; /* Smooth transition for border change */
+}
+
+.menu-item .text h2 {
+    font-size: 1rem;
+    color: #fff;
+    margin: 0; /* Remove default margin */
+}
+
+}
+
+/* Main Content */
+.content {
+    margin-left: 175px; /* Push the content to the right of the sidebar */
+    width: calc(100% - 175px); /* Adjust width based on sidebar size */
+    padding: 0; /* Remove default padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Wallet Section */
+.wallet-section {
+    width: 100%;
+    margin-top: 0; /* Ensure wallet section starts at the top */
+}
+
+/* Wallet Header */
+.wallet-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #202c44;
+    color: grey;
+    padding: 10px 20px;
+    font-weight: bold;
+    position: fixed; /* Fixed positioning to align with the content */
+    top: 0; /* Align with the top of the viewport or parent container */
+    left: 205px; /* Align with the sidebar width */
+    box-sizing: border-box; /* Include padding in width calculation */
+    width: calc(100% - 175px); /* Full width of the content area, minus the sidebar */
+    z-index: 1; /* Ensure it stays above other elements */
+}
+
+/* Wallet List */
+.wallet-list {
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 175px); /* Full viewport width minus sidebar */
+    margin-left: 175px; /* Adjust for sidebar */
+    margin-top: 58.75px; /* Maintain space from the top */
+    box-sizing: border-box;
+    background-color: #252e47;
+}
+
+/* Wallet Column */
+.wallet-column {
+    flex: 1; /* Ensure columns take equal space */
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Coin Entry */
+.coin-entry {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 0;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+/* Change background color on hover */
+.coin-entry:hover {
+    background-color: #303454; /* New background color on hover */
+}
+
+/* Bitcoin Row Background Color */
+.coin-entry.bitcoin-row {
+    background-color: #252e47; /* Set background color for Bitcoin row */
+}
+
+/* Bitcoin Name Column */
+.coin-entry .bitcoin-name {
+    flex: 2; /* Adjust flex-grow to allocate more space */
+    text-align: left;
+    color: white;
+    padding-left: 10px; /* Adjusted space for better alignment */
+    display: flex; /* Align image and text horizontally */
+    align-items: center; /* Center items vertically */
+}
+
+.coin-entry .bitcoin-name .bitcoin-icon {
+    width: 40px; /* Adjust size as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-left: 150px; /* Space between image and text */
+    margin-right: 10px;
+}
+
+/* Bitcoin Price Column */
+.coin-entry .bitcoin-price {
+    flex: 2; /* Adjust flex-grow to allocate more space */
+    text-align: left;
+    color: grey;
+    padding-left: 150px; /* Adjusted space for better alignment */
+    line-height: 1.8;
+}
+
+/* 24hrs Column */
+.coin-entry .bitcoin-24hrs {
+    flex: 2; /* Adjust flex-grow to allocate more space */
+    text-align: left;
+    padding-left: 110px; /* Adjusted space for better alignment */
+    line-height: 1.8;
+    color: grey;
+}
+
+/* Add classes for positive and negative changes */
+.coin-entry .bitcoin-24hrs.negative {
+    color: red;
+}
+
+.coin-entry .bitcoin-24hrs.positive {
+    color: green;
+}
+
+/* Market Cap Column */
+.coin-entry .bitcoin-market-cap {
+    flex: 2; /* Adjust flex-grow to allocate more space */
+    text-align: right;
+    color: grey;
+    padding-right: 150px; /* Adjusted space for better alignment */
+    line-height: 1.8;
+}
+
+
+/* Ethereum Row Background Color */
+.coin-entry.ethereum-row {
+    background-color: #202c44; /* Set background color for Ethereum row */
+    color: white; /* Ensure text color is readable against the dark background */
+}
+
+/* Ethereum Name Column */
+.coin-entry.ethereum-row .ethereum-name {
+    flex: 2; /* Adjust flex-grow to allocate more space */
+    text-align: left;
+    color: white; /* Text color for Ethereum name */
+    padding-left: 8px; /* Adjusted space for better alignment */
+    display: flex; /* Align image and text horizontally */
+    align-items: center; /* Center items vertically */
+}
+
+.coin-entry.ethereum-row .ethereum-name .ethereum-icon {
+    width: 40px; /* Adjust size as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-left: 150px; /* Space between image and text */
+    margin-right: 10px;
+}
+
+/* Ethereum Price Column */
+.coin-entry.ethereum-row .ethereum-price {
+    flex: 2; /* Adjust flex-grow to allocate more space */
+    text-align: left;
+    color: grey; /* Text color for Ethereum price */
+    padding-left: 138px; /* Adjusted space for better alignment */
+    line-height: 1.8;
+}
+
+/* 24hrs Column */
+.coin-entry.ethereum-row .ethereum-24hrs {
+    flex: 2; /* Adjust flex-grow to allocate more space */
+    text-align: left;
+    padding-left: 115px; /* Adjusted space for better alignment */
+    line-height: 1.8;
+    color: grey; /* Text color for Ethereum 24-hour change */
+}
+
+/* Add classes for positive and negative changes */
+.coin-entry.ethereum-row .ethereum-24hrs.negative {
+    color: red; /* Color for negative change */
+}
+
+.coin-entry.ethereum-row .ethereum-24hrs.positive {
+    color: green; /* Color for positive change */
+}
+
+/* Market Cap Column */
+.coin-entry.ethereum-row .ethereum-market-cap {
+    flex: 2; /* Adjust flex-grow to allocate more space */
+    text-align: right;
+    color: grey; /* Text color for Ethereum market cap */
+    padding-right: 154px; /* Adjusted space for better alignment */
+    line-height: 1.8;
+}
+
+
+
+/* Solana Row Background Color */
+.coin-entry.solana-row {
+    background-color: #252e47; /* Set background color for Solana row */
+}
+
+/* Change background color on hover */
+.coin-entry:hover {
+    background-color: #303454; /* Hover background color */
+}
+
+/* Solana Name Column */
+.coin-entry .solana-name {
+    flex: 2;
+    text-align: left;
+    color: white;
+    padding-left: 7px;
+    display: flex;
+    align-items: center;
+}
+
+.coin-entry .solana-name .solana-icon {
+    width: 45px;
+    height: auto;
+    margin-left: 150px;
+    margin-right: 10px;
+}
+
+/* Solana Price Column */
+.coin-entry .solana-price {
+    flex: 2;
+    text-align: left;
+    color: grey;
+    padding-left: 154px;
+    line-height: 1.8;
+}
+
+/* 24hrs Column */
+.coin-entry .solana-24hrs {
+    flex: 2;
+    text-align: left;
+    padding-left: 110px;
+    line-height: 1.8;
+    color: grey;
+}
+
+/* Add classes for positive and negative changes */
+.coin-entry .solana-24hrs.negative {
+    color: red;
+}
+
+.coin-entry .solana-24hrs.positive {
+    color: green;
+}
+
+/* Market Cap Column */
+.coin-entry .solana-market-cap {
+    flex: 2;
+    text-align: right;
+    color: grey;
+    padding-right: 150px;
+    line-height: 1.8;
+}
+
+
+
+
+/* BNB Row Background Color */
+.coin-entry.bnb-row {
+    background-color: #202c44; /* Set background color for BNB row */
+}
+
+/* Change background color on hover */
+.coin-entry:hover {
+    background-color: #303454; /* Hover background color */
+}
+
+/* BNB Name Column */
+.coin-entry .bnb-name {
+    flex: 2;
+    text-align: left;
+    color: white;
+    padding-left: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.coin-entry .bnb-name .bnb-icon {
+    width: 40px;
+    height: auto;
+    margin-left: 150px;
+    margin-right: 10px;
+}
+
+/* BNB Price Column */
+.coin-entry .bnb-price {
+    flex: 2;
+    text-align: left;
+    color: grey;
+    padding-left: 170px;
+    line-height: 1.8;
+}
+
+/* 24hrs Column */
+.coin-entry .bnb-24hrs {
+    flex: 2;
+    text-align: left;
+    padding-left: 111px;
+    line-height: 1.8;
+    color: grey;
+}
+
+/* Add classes for positive and negative changes */
+.coin-entry .bnb-24hrs.negative {
+    color: red;
+}
+
+.coin-entry .bnb-24hrs.positive {
+    color: green;
+}
+
+/* Market Cap Column */
+.coin-entry .bnb-market-cap {
+    flex: 2;
+    text-align: right;
+    color: grey;
+    padding-right: 150px;
+    line-height: 1.8;
+}
+
+
+
+/* avalanche Row Background Color */
+.coin-entry.avalanche-row {
+    background-color: #252e47; /* Set background color for Polygon row */
+}
+
+/* Change background color on hover */
+.coin-entry:hover {
+    background-color: #303454; /* Hover background color */
+}
+
+/* avalanche Name Column */
+.coin-entry .avalanche-name {
+    flex: 2;
+    text-align: left;
+    color: white;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.coin-entry .avalanche-name .avalanche-icon {
+    width: 40px;
+    height: auto;
+    margin-left: 147px;
+    margin-right: 10px;
+}
+
+/* avalanche Price Column */
+.coin-entry .avalanche-price {
+    flex: 2;
+    text-align: left;
+    color: grey;
+    padding-left: 140px;
+    line-height: 1.8;
+}
+
+/* 24hrs Column */
+.coin-entry .avalanche-24hrs {
+    flex: 2;
+    text-align: left;
+    padding-left: 110px;
+    line-height: 1.8;
+    color: grey;
+}
+
+/* Add classes for positive and negative changes */
+.coin-entry .avalanche-24hrs.negative {
+    color: red;
+}
+
+.coin-entry .avalanche-24hrs.positive {
+    color: green;
+}
+
+/* Market Cap Column */
+.coin-entry .avalanche-market-cap {
+    flex: 2;
+    text-align: right;
+    color: grey;
+    padding-right: 150px;
+    line-height: 1.8;
+}
+
+/* optimism Row Background Color */
+.coin-entry.optimism-row {
+    background-color: #202c44; /* Set background color for Polygon row */
+}
+
+/* Change background color on hover */
+.coin-entry:hover {
+    background-color: #303454; /* Hover background color */
+}
+
+/* optimism Name Column */
+.coin-entry .optimism-name {
+    flex: 2;
+    text-align: left;
+    color: white;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.coin-entry .optimism-name .optimism-icon {
+    width: 40px;
+    height: auto;
+    margin-left: 147px;
+    margin-right: 10px;
+}
+
+/* optimism Price Column */
+.coin-entry .optimism-price {
+    flex: 2;
+    text-align: left;
+    color: grey;
+    padding-left: 140px;
+    line-height: 1.8;
+}
+
+/* 24hrs Column */
+.coin-entry .optimism-24hrs {
+    flex: 2;
+    text-align: left;
+    padding-left: 110px;
+    line-height: 1.8;
+    color: grey;
+}
+
+/* Add classes for positive and negative changes */
+.coin-entry .optimism-24hrs.negative {
+    color: red;
+}
+
+.coin-entry .optimism-24hrs.positive {
+    color: green;
+}
+
+/* Market Cap Column */
+.coin-entry .optimism-market-cap {
+    flex: 2;
+    text-align: right;
+    color: grey;
+    padding-right: 150px;
+    line-height: 1.8;
+}
+
+/* arbitrum Row Background Color */
+.coin-entry.arbitrum-row {
+    background-color: #252e47; /* Set background color for Polygon row */
+}
+
+/* Change background color on hover */
+.coin-entry:hover {
+    background-color: #303454; /* Hover background color */
+}
+
+/* arbitrum Name Column */
+.coin-entry .arbitrum-name {
+    flex: 2;
+    text-align: left;
+    color: white;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.coin-entry .arbitrum-name .arbitrum-icon {
+    width: 40px;
+    height: auto;
+    margin-left: 147px;
+    margin-right: 10px;
+}
+
+/* arbitrum Price Column */
+.coin-entry .arbitrum-price {
+    flex: 2;
+    text-align: left;
+    color: grey;
+    padding-left: 140px;
+    line-height: 1.8;
+}
+
+/* 24hrs Column */
+.coin-entry .arbitrum-24hrs {
+    flex: 2;
+    text-align: left;
+    padding-left: 110px;
+    line-height: 1.8;
+    color: grey;
+}
+
+/* Add classes for positive and negative changes */
+.coin-entry .arbitrum-24hrs.negative {
+    color: red;
+}
+
+.coin-entry .arbitrum-24hrs.positive {
+    color: green;
+}
+
+/* Market Cap Column */
+.coin-entry .arbitrum-market-cap {
+    flex: 2;
+    text-align: right;
+    color: grey;
+    padding-right: 150px;
+    line-height: 1.8;
+}
+
+
+/* fantom Row Background Color */
+.coin-entry.fantom-row {
+    background-color: #202c44; /* Set background color for Polygon row */
+}
+
+/* Change background color on hover */
+.coin-entry:hover {
+    background-color: #303454; /* Hover background color */
+}
+
+/* fantom Name Column */
+.coin-entry .fantom-name {
+    flex: 2;
+    text-align: left;
+    color: white;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.coin-entry .fantom-name .fantom-icon {
+    width: 40px;
+    height: auto;
+    margin-left: 147px;
+    margin-right: 10px;
+}
+
+/* fantom Price Column */
+.coin-entry .fantom-price {
+    flex: 2;
+    text-align: left;
+    color: grey;
+    padding-left: 140px;
+    line-height: 1.8;
+}
+
+/* 24hrs Column */
+.coin-entry .fantom-24hrs {
+    flex: 2;
+    text-align: left;
+    padding-left: 110px;
+    line-height: 1.8;
+    color: grey;
+}
+
+/* Add classes for positive and negative changes */
+.coin-entry .fantom-24hrs.negative {
+    color: red;
+}
+
+.coin-entry .fantom-24hrs.positive {
+    color: green;
+}
+
+/* Market Cap Column */
+.coin-entry .fantom-market-cap {
+    flex: 2;
+    text-align: right;
+    color: grey;
+    padding-right: 150px;
+    line-height: 1.8;
+}
+
+/* conflux Row Background Color */
+.coin-entry.conflux-row {
+    background-color: #252e47; /* Set background color for Polygon row */
+}
+
+/* Change background color on hover */
+.coin-entry:hover {
+    background-color: #303454; /* Hover background color */
+}
+
+/* conflux Name Column */
+.coin-entry .conflux-name {
+    flex: 2;
+    text-align: left;
+    color: white;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.coin-entry .conflux-name .conflux-icon {
+    width: 40px;
+    height: auto;
+    margin-left: 147px;
+    margin-right: 10px;
+}
+
+/* fantom Price Column */
+.coin-entry .conflux-price {
+    flex: 2;
+    text-align: left;
+    color: grey;
+    padding-left: 140px;
+    line-height: 1.8;
+}
+
+/* 24hrs Column */
+.coin-entry .conflux-24hrs {
+    flex: 2;
+    text-align: left;
+    padding-left: 110px;
+    line-height: 1.8;
+    color: grey;
+}
+
+/* Add classes for positive and negative changes */
+.coin-entry .conflux-24hrs.negative {
+    color: red;
+}
+
+.coin-entry .conflux-24hrs.positive {
+    color: green;
+}
+
+/* Market Cap Column */
+.coin-entry .conflux-market-cap {
+    flex: 2;
+    text-align: right;
+    color: grey;
+    padding-right: 150px;
+    line-height: 1.8;
+}
+
+/* kava Row Background Color */
+.coin-entry.kava-row {
+    background-color: #202c44; /* Set background color for kava row */
+}
+
+/* Change background color on hover */
+.coin-entry:hover {
+    background-color: #303454; /* Hover background color */
+}
+
+/* kava Name Column */
+.coin-entry .kava-name {
+    flex: 2;
+    text-align: left;
+    color: white;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.coin-entry .kava-name .kava-icon {
+    width: 30px;
+    height: auto;
+    margin-left: 147px;
+    margin-right: 10px;
+}
+
+/* kava Price Column */
+.coin-entry .kava-price {
+    flex: 2;
+    text-align: left;
+    color: grey;
+    padding-left: 170px;
+    line-height: 1.8;
+}
+
+/* 24hrs Column */
+.coin-entry .kava-24hrs {
+    flex: 2;
+    text-align: left;
+    padding-left: 135px;
+    line-height: 1.8;
+    color: grey;
+}
+
+/* Add classes for positive and negative changes */
+.coin-entry .kava-24hrs.negative {
+    color: red;
+}
+
+.coin-entry .kava-24hrs.positive {
+    color: green;
+}
+
+/* Market Cap Column */
+.coin-entry .kava-market-cap {
+    flex: 2;
+    text-align: right;
+    color: grey;
+    padding-right: 150px;
+    line-height: 1.8;
+}
+
+/* moonbeam Row Background Color */
+.coin-entry.moonbeam-row {
+    background-color: #252e47; /* Set background color for moonbeam row */
+}
+
+/* Change background color on hover */
+.coin-entry:hover {
+    background-color: #303454; /* Hover background color */
+}
+
+/* moonbeam Name Column */
+.coin-entry .moonbeam-name {
+    flex: 2;
+    text-align: left;
+    color: white;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.coin-entry .moonbeam-name .moonbeam-icon {
+    width: 30px;
+    height: auto;
+    margin-left: 147px;
+    margin-right: 10px;
+}
+
+/* moonbeam Price Column */
+.coin-entry .moonbeam-price {
+    flex: 2;
+    text-align: left;
+    color: grey;
+    padding-left: 140px;
+    line-height: 1.8;
+}
+
+/* 24hrs Column */
+.coin-entry .moonbeam-24hrs {
+    flex: 2;
+    text-align: left;
+    padding-left: 110px;
+    line-height: 1.8;
+    color: grey;
+}
+
+/* Add classes for positive and negative changes */
+.coin-entry .moonbeam-24hrs.negative {
+    color: red;
+}
+
+.coin-entry .moonbeam-24hrs.positive {
+    color: green;
+}
+
+/* Market Cap Column */
+.coin-entry .moonbeam-market-cap {
+    flex: 2;
+    text-align: right;
+    color: grey;
+    padding-right: 150px;
+    line-height: 1.8;
+}
+
+
+
+.copy-button {
+    display: none;
+    background-color: transparent; /* Ensures the button background is transparent */
+    border: none; /* Removes the default border around the button */
+    padding: 0; /* Removes any default padding */
+    cursor: pointer; /* Changes the cursor to a pointer to indicate clickability */
+    margin-top: 18px;
+}
+
+.wallet-column:hover .copy-button {
+    display: block; /* Show button on hover */
+}
+
+
+.button-text {
+    margin-right: 5px; /* Space between the text and the icon */
+    position: absolute; /* Allows overlay of text over the icon */
+    top: 50%; /* Centers text vertically */
+    left: 50%; /* Centers text horizontally */
+    transform: translate(-50%, -50%); /* Adjusts the centering */
+    opacity: 0; /* Initially hides the text */
+    transition: opacity 0.3s; /* Smooth transition for text visibility */
+}
+
+.copy-button:hover .button-text {
+    opacity: 1; /* Shows the text on hover */
+}
+
+.copy-icon {
+    width: 13px; /* Adjust the size as needed */
+    height: 13px; /* Adjust the size as needed */
+    vertical-align: middle; /* Aligns the icon vertically with the text */
+    cursor: pointer; /* Adds a pointer cursor to indicate it's clickable */
+    margin-left: 5px; /* Adds some space between the text and the icon */
+}

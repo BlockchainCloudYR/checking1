@@ -1,0 +1,474 @@
+body, h1, h2, ul, li, section {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+/* Container */
+.container {
+    display: flex;
+    width: 100vw; /* Ensure container uses the full viewport width */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 175px;
+    background-color: #25304a;
+    color: #fff;
+    padding: 1rem;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 120px; /* Make sidebar narrower on smaller screens */
+    }
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem; /* Space between logo and sections */
+    margin-top: 0; /* Remove top margin */
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo img {
+    width: 100px; /* Adjust logo size as needed */
+    height: auto;
+    margin-bottom: 0.5rem; /* Space between logo and text */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo:hover img {
+    transform: scale(1.1); /* Slightly expand the logo */
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4); /* Add a subtle glow */
+}
+
+.logo-name h2 {
+    font-size: 1.2rem;
+    color: #fff;
+    margin: 0; /* Remove default margin */
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover h2 {
+    transform: scale(1.05); /* Slightly expand the text */
+    color: #f0f0f0; /* Slightly lighter text color on hover */
+}
+
+@media screen and (max-width: 768px) {
+    .logo img {
+        width: 80px; /* Adjust logo size for smaller screens */
+    }
+    .logo-name h2 {
+        font-size: 1rem;
+    }
+}
+
+/* Sections */
+.sections {
+    width: 100%;
+}
+
+.menu-item {
+    display: flex; /* Align icon and text horizontally */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: #25304a;
+    border-radius: 5px;
+    width: 100%; /* Ensure full width */
+    position: relative; /* For positioning the rectangle indicator */
+    overflow: hidden; /* Ensure no overlap */
+    transition: background-color 0.3s, border 0.3s;
+}
+
+.menu-item:hover {
+    background-color: #354159; /* Darker background color on hover */
+    cursor: pointer;
+}
+
+/* Rectangle Indicator Styling */
+.rectangle-indicator {
+    display: none; /* Hidden by default */
+    width: 10px; /* Width of the rectangle */
+    height: 30px; /* Height of the rectangle */
+    background-color: white; /* Color of the rectangle */
+    position: absolute; /* Positioning relative to menu-item */
+    left: -20px; /* Adjust to position rectangle extremely left */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for perfect centering */
+}
+
+/* Show rectangle indicator on hover */
+.menu-item:hover .rectangle-indicator {
+    display: block; /* Show the rectangle on hover */
+}
+
+/* Highlight for Account Icon */
+.menu-item.highlight-account:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Highlight for Wallet Icon */
+.menu-item.highlight-wallet:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Highlight for Send Icon */
+.menu-item.highlight-send:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Highlight for Receive Icon */
+.menu-item.highlight-receive:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Highlight for Buy Crypto Icon */
+.menu-item.highlight-buy-crypto:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Highlight for Sell Crypto Icon */
+.menu-item.highlight-sell-crypto:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Highlight for History Icon */
+.menu-item.highlight-history:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.menu-item.highlight-exit:hover .icon img {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.menu-item .icon {
+    margin-right: 0.5rem; /* Space between icon and text */
+}
+
+.menu-item .icon img {
+    width: 24px; /* Adjust size as needed */
+    height: auto; /* Maintain aspect ratio */
+    transition: border 0.1s; /* Smooth transition for border change */
+}
+
+.menu-item .text h2 {
+    font-size: 1rem;
+    color: #fff;
+    margin: 0; /* Remove default margin */
+}
+
+
+/* Right sidebar styling */
+.right-sidebar {
+    background-color: #25304a;
+    color: #fff;
+    width: 300px;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;  /* Fix the sidebar in place */
+    right: 0;         /* Align it to the right side */
+    top: 0;           /* Start from the top of the page */
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;    /* Ensure it's above other content */
+}
+
+@media screen and (max-width: 768px) {
+    .right-sidebar {
+        width: 250px;
+    }
+}
+
+.search-container {
+    margin-bottom: 15px;
+    display: flex;                /* Align icon and input side by side */
+    align-items: center;          /* Vertically center align */
+    border: 0.5px solid #ffffff;  /* White border */
+    border-radius: 5px;           /* Rounded corners */
+    padding: 5px;                 /* Padding inside the container */
+    background-color: #25304a;    /* Background color for better contrast */
+}
+
+.search-icon {
+    width: 20px;                  /* Adjust the size of the search icon */
+    height: auto;
+    margin-right: 10px;           /* Space between the icon and input */
+}
+
+#coin-search {
+    flex: 1; /* Takes up remaining space */
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;           /* Ensure border-radius matches the container */
+    border: none;                 /* Remove default border */
+    font-size: 14px;
+    color: #fff;                  /* Text color */
+    background-color: #25304a;    /* Match background color with container */
+    outline: none;                /* Remove default focus outline */
+}
+
+@media screen and (max-width: 768px) {
+    #coin-search {
+        font-size: 12px; /* Smaller text for small screens */
+    }
+}
+
+
+/* Coin name (optional if needed) */
+.coin-name {
+    position: absolute;
+    top: -20px; /* Adjust this value to move the name up */
+    left: 0;
+    font-size: 14px;
+    color: #ffffff;
+    margin-bottom: 5px; /* Space below the coin name */
+}
+
+
+#coin-search:focus {
+    outline: none;                /* No outline on focus */
+    border: none;                 /* Prevent input border overlapping with container */
+}
+
+#coin-search::placeholder {
+    color: #ffffff;               /* White placeholder text */
+    font-weight: bold;            /* Bold placeholder */
+    opacity: 1;                   /* Ensure the color is fully applied */
+}
+
+
+
+
+.coin-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.coin-item {
+    display: flex;             /* Align the icon and text horizontally */
+    align-items: center;        /* Vertically center the content */
+    padding: 10px;
+    background-color: #25304a;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.coin-item:hover {
+    background-color: #354159;  /* Highlight on hover */
+}
+
+.coin-item .icon {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;         /* Space between the icon and text */
+}
+
+,coin-item .icon:hover{
+    background-color: #354159;
+}
+
+.coin-item .icon img {
+    width: 30px;                /* Size of the coin icons */
+    height: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .coin-item .icon img {
+        width: 24px; /* Smaller coin icons on smaller screens */
+    }
+}
+
+/* Coin item text */
+.coin-item .text {
+    display: flex;
+    flex-direction: column; /* Ensure text elements are stacked vertically */
+    align-items: flex-start; /* Align text to the start (top) of the container */
+    justify-content: flex-start; /* Align text to the start (top) within the container */
+}
+
+
+.coin-item .text h2 {
+    font-size: 1rem;
+    color: #fff;
+    margin: 0;
+    line-height: 1.2;
+}
+
+@media screen and (max-width: 768px) {
+    .coin-item .text h2 {
+        font-size: 0.9rem;
+    }
+}
+
+.content {
+    background-color: #1e2842;
+    padding: 40px;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    margin-left: 175px; /* Offset for the fixed sidebar */
+    width: calc(100% - 175px); /* Ensure it uses the remaining width */
+    height: 100vh; /* Full viewport height */
+    overflow: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .content {
+        padding: 20px; /* Less padding for smaller screens */
+        margin-left: 120px; /* Adjust for the narrower sidebar */
+        width: calc(100% - 120px);
+    }
+}
+
+/* Address container */
+#address-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: -320px;
+    margin-left: -300px;
+}
+
+/* Heading */
+#address-container h1 {
+    font-size: 2em; /* Adjust as needed */
+    margin-bottom: 15px;
+    color: #ffffff; /* White color for text */
+}
+
+
+/* Ethereum address paragraph */
+#ethereum-address {
+    font-size: 1.5em; /* Adjust as needed */
+    margin: 10px 0;
+    color: #ffffff; /* White color for text */
+}
+
+
+.copy-icon img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#qr-code {
+    margin-top: 10px;
+    width: 150px;
+    height: 150px;
+}
+
+
+
+/* Email icon */
+.email-icon {
+    display: inline-block;
+    width: 55px; /* Adjust size of the box */
+    height: 55px; /* Adjust size of the box */
+    border: 2px solid #ffffff;
+    border-radius: 15px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin-top: 50px; /* Space above the email icon */
+    margin-right: 100px;
+    padding: 8px 10px 7px 8.5px; /* Adjust padding to move icon down */
+    background-color: #000000;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.email-icon img {
+    width: 35px; /* Adjust size as needed */
+    height: 35px; /* Adjust size as needed */
+
+    padding-bottom:5px;
+}
+.email-label {
+    color: #ffffff; /* White color for text */
+    margin-top: 15px; /* Space above the label */
+    font-size: 1em; /* Adjust font size as needed */
+    padding-right: 97px;
+    cursor:pointer;
+}
+
+/* Change on hover */
+.email-icon:hover {
+    background-color: #444444; /* Slightly lighter black on hover */
+    transform: scale(1.1); /* Slightly scale up the icon on hover */
+}
+
+.button-container {
+    display: flex;
+    gap: 20px; /* Space between the containers */
+    margin-left: 20px;
+}
+
+/* View on Blockchain container */
+.view-icon {
+    display: inline-block;
+    width: 55px; /* Same size as the email icon box */
+    height: 55px; /* Same size as the email icon box */
+    border: 2px solid #ffffff;
+    border-radius: 15px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin-top: 50px; /* Align with email icon */
+    padding: 8px 10px 7px 8.5px; /* Adjust padding to match email icon */
+    background-color: #000000;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.view-icon img {
+    width: 10px; /* Same size as the email icon image */
+    height: 10px; /* Same size as the email icon image */
+    padding-bottom: 5px;
+}
+
+.view-label {
+    color: #ffffff; /* White color for text */
+    margin-top: 15px; /* Space above the label */
+    font-size: 1em; /* Adjust font size as needed */
+}
+
+/* Change on hover */
+.view-icon:hover {
+    background-color: #444444; /* Slightly lighter black on hover */
+    transform: scale(1.1); /* Slightly scale up the icon on hover */
+}
