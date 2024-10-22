@@ -4,25 +4,25 @@ import websockets
 import json
 import threading
 import requests
-import subprocess
-import os
 from web3 import Web3
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import SQLAlchemyError
 from decimal import Decimal
 import time
-import datetime
+from datetime import datetime, timedelta
 from solders.keypair import Keypair
 from solana.rpc.api import Client
 import psycopg2
 from bit import PrivateKeyTestnet
 from dotenv import load_dotenv
-
+from binance.client import Client
 
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = 'yeah buddy'
+
+client = Client()
 
 # Your Infura Project ID
 INFURA_PROJECT_ID = '38898b105ab04267a0acd987a4d82d9a'
@@ -77,17 +77,38 @@ with app.app_context():
     db.create_all()
 
 # Global variables for real-time data on major cryptocurrencies
-btc_price = btc_change = None
-eth_price = eth_change = None
-sol_price = sol_change = None
-bnb_price = bnb_change = None
-avax_price = avax_change = None
-opt_price = opt_change = None
-arb_price = arb_change = None
-ftm_price = ftm_change = None
-cfx_price = cfx_change = None
-kava_price = kava_change = None
-moon_price = moon_change = None
+bitcoin_price = None
+bitcoin_price_change_percent = None
+
+ethereum_price = None
+ethereum_price_change_percent = None
+
+solana_price = None
+solana_price_change_percent = None
+
+bnb_price = None
+bnb_price_change_percent = None
+
+avalanche_price = None
+avalanche_price_change_percent = None
+
+optimism_price = None
+optimism_price_change_percent = None
+
+arbitrum_price = None
+arbitrum_price_change_percent = None
+
+fantom_price = None
+fantom_price_change_percent = None
+
+conflux_price = None
+conflux_price_change_percent = None
+
+kava_price = None
+kava_price_change_percent = None
+
+moonbeam_price = None
+moonbeam_price_change_percent = None
 
 
 
@@ -233,81 +254,77 @@ def price():
     })
 
 
-# Example API URL for CoinGecko
-COIN_GECKO_API_URL = 'https://api.coingecko.com/api/v3/coins/'
-
-# Helper function to get price data from CoinGecko
-def fetch_coin_prices(coin_id):
+# Helper function to get 7-day historical prices from Binance (using Klines)
+def fetch_coin_charts(symbol):
     try:
-        response = requests.get(f'{COIN_GECKO_API_URL}{coin_id}/market_chart', params={
-            'vs_currency': 'usd',
-            'days': '7'
-        })
-        data = response.json()
+        # Fetch 7 days' worth of 1-day candles (Klines)
+        klines = client.get_klines(symbol=symbol, interval=Client.KLINE_INTERVAL_1DAY, limit=7)
+        
+        # Process and return data in a format similar to what CoinGecko provides
         prices = [
-            {'date': datetime.utcfromtimestamp(price[0] / 1000), 'price': price[1]}
-            for price in data['prices']
+            {'date': datetime.utcfromtimestamp(int(kline[0]) / 1000), 'price': float(kline[4])}  # Closing price
+            for kline in klines
         ]
         return prices
     except Exception as e:
-        print(f'Error fetching {coin_id} prices: {e}')
+        print(f"Error fetching {symbol} prices: {e}")
         return []
 
 
 
-@app.route('/api/bitcoin-prices')
-def bitcoin_prices():
-    prices = fetch_coin_prices('bitcoin')
+@app.route('/api/bitcoin-chart')
+def bitcoin_chart():
+    prices = fetch_coin_charts('BTCUSDT')
     return jsonify(prices)
 
-@app.route('/api/ethereum-prices')
-def ethereum_prices():
-    prices = fetch_coin_prices('ethereum')
+@app.route('/api/ethereum-chart')
+def ethereum_chart():
+    prices = fetch_coin_charts('ETHUSDT')
     return jsonify(prices)
 
-@app.route('/api/solana-prices')
-def solana_prices():
-    prices = fetch_coin_prices('solana')
+@app.route('/api/solana-chart')
+def solana_chart():
+    prices = fetch_coin_charts('SOLUSDT')
     return jsonify(prices)
 
-@app.route('/api/bnb-prices')
-def bnb_prices():
-    prices = fetch_coin_prices('binancecoin')
+@app.route('/api/bnb-chart')
+def bnb_chart():
+    prices = fetch_coin_charts('BNBUSDT')
     return jsonify(prices)
 
-@app.route('/api/avax-prices')
-def avax_prices():
-    prices = fetch_coin_prices('avalanche-2')
+@app.route('/api/avax-chart')
+def avax_chart():
+    prices = fetch_coin_charts('AVAXUSDT')
     return jsonify(prices)
 
-@app.route('/api/optimism-prices')
-def optimism_prices():
-    prices = fetch_coin_prices('optimism')
+@app.route('/api/optimism-chart')
+def optimism_chart():
+    prices = fetch_coin_charts('OPUSDT')
     return jsonify(prices)
 
-@app.route('/api/arbitrum-prices')
-def arbitrum_prices():
-    prices = fetch_coin_prices('arbitrum')
+@app.route('/api/arbitrum-chart')
+def arbitrum_chart():
+    prices = fetch_coin_charts('ARBUSDT')
     return jsonify(prices)
 
-@app.route('/api/fantom-prices')
-def fantom_prices():
-    prices = fetch_coin_prices('fantom')
+@app.route('/api/fantom-chart')
+def fantom_chart():
+    prices = fetch_coin_charts('FTMUSDT')
     return jsonify(prices)
 
-@app.route('/api/conflux-prices')
-def conflux_prices():
-    prices = fetch_coin_prices('conflux-token')
+@app.route('/api/conflux-chart')
+def conflux_chart():
+    prices = fetch_coin_charts('CFXUSDT')
     return jsonify(prices)
 
-@app.route('/api/kava-prices')
-def kava_prices():
-    prices = fetch_coin_prices('kava')
+@app.route('/api/kava-chart')
+def kava_chart():
+    prices = fetch_coin_charts('KAVAUSDT')
     return jsonify(prices)
 
-@app.route('/api/moonbeam-prices')
-def moonbeam_prices():
-    prices = fetch_coin_prices('moonbeam')
+@app.route('/api/moonbeam-chart')
+def moonbeam_chart():
+    prices = fetch_coin_charts('GLMRUSDT')
     return jsonify(prices)
 
 
