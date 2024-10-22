@@ -9,3 +9,4 @@ psycopg2-binary
 bit
 python-dotenv
 eventlet
+python-binance
